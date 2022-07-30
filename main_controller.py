@@ -1,18 +1,20 @@
 from _thread import start_new_thread
 import locale
 import utils
-import telebot
 from telebot import types
 from telebot import TeleBot
 locale.setlocale(locale.LC_ALL)
 
-bot = telebot.TeleBot("5467360653:AAGyE0Uqq-zktKDirlcSdskUtdz09NJHxIc")
+with open("bot_token.txt","r") as bot_token_file:
+    bot_token = bot_token_file.read()
+
+bot = TeleBot(bot_token)
 greeting = '''АЛЁ ЕБЛАНЫ ИГРА НАЧАЛАСЬ
 ДЕЛАЕМ СТАВКИ
 '''
 
 
-@bot.message_handler(commands=["start"])
+@bot.message_handler(commands=["startt"])
 def start_func(message: types.Message):
     bot.send_message(message.chat.id, greeting)
     start_new_thread(utils.playing, (message,))

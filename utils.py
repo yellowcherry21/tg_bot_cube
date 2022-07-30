@@ -1,8 +1,12 @@
-from telebot import types
+from telebot import types, TeleBot
 import telebot
 import time
 
-bot = telebot.TeleBot("5467360653:AAGyE0Uqq-zktKDirlcSdskUtdz09NJHxIc")
+
+with open("bot_token.txt","r") as bot_token_file:
+    bot_token = bot_token_file.read()
+
+bot = TeleBot(bot_token)
 
 
 def playing(message: types.Message):
