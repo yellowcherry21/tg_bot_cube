@@ -1,9 +1,8 @@
 from telebot import types, TeleBot
-import telebot
 import time
 
 
-with open("bot_token.txt","r") as bot_token_file:
+with open("bot_token.txt", "r") as bot_token_file:
     bot_token = bot_token_file.read()
 
 bot = TeleBot(bot_token)
@@ -18,7 +17,8 @@ def playing(message: types.Message):
     btn5 = types.KeyboardButton("5")
     btn6 = types.KeyboardButton("6")
     markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
-    bot.send_message(message.chat.id, text="ВЫБИРАЙ БЛЯ ЦИФРУ ЕБЛАН", reply_markup=markup)
+    bot.send_message(
+        message.chat.id, text="ВЫБИРАЙ БЛЯ ЦИФРУ ЕБЛАН", reply_markup=markup)
 
     time.sleep(30)
 
@@ -36,3 +36,12 @@ def save_user(user: types.User):
 
 def throw_cube(message: types.Message) -> int:
     return bot.send_dice(chat_id=message.chat.id, emoji="🎲").dice.value
+
+
+def save_prediction(message: types.Message):
+    with open("user_predictions.txt", "r+t", encoding="UTF-8") as user_predictions:
+        id = int(user_predictions.readlines()[-1].split(",")[0]) + 1
+        user_predictions.write(str(id) + "," +
+                               str(message.from_user.id) + "," +
+                               str(message.date) + "," +
+                               str(message.text)+"\n")

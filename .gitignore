@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 bot_token.txt
+.idea
