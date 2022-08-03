@@ -1,5 +1,5 @@
-520156403,Вася,vasia2121
-337258048,Xan,napilsjaispit
-681288218,Дмитрий,Qko_de_Cou
-1032345751,Роман,Rockhunterbpd
-492908616,Nikita,gankernikita
+520156403,Вася,vasia2121,0
+337258048,Xan,napilsjaispit,0
+681288218,Дмитрий,Qko_de_Cou,0
+1032345751,Роман,Rockhunterbpd,0
+492908616,Nikita,gankernikita,0

@@ -22,16 +22,15 @@ def playing(message: types.Message):
 
     time.sleep(30)
 
-    while True:
-        result = throw_cube(message)
-        bot.send_message(message.chat.id, str(result))
-        time.sleep(15)
+    result = throw_cube(message)
+    bot.send_message(message.chat.id, f"ВЫПАЛО {result}")
 
 
 def save_user(user: types.User):
     with open("users.txt", "a", encoding="UTF-8") as users_file:
         users_file.write(str(user.id) + "," +
-                         str(user.first_name)+"," + str(user.username)+"\n")
+                         str(user.first_name)+"," +
+                         str(user.username)+",0\n")
 
 
 def throw_cube(message: types.Message) -> int:
