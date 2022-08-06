@@ -3,6 +3,7 @@ import locale
 import utils
 from telebot.types import Message
 from telebot import TeleBot
+
 locale.setlocale(locale.LC_ALL)
 
 with open("bot_token.txt", "r") as bot_token_file:
@@ -33,13 +34,13 @@ def throw_cube(message: Message):
     bot.send_message(message.chat.id, str(dice_value))
 
 
-@bot.message_handler(func=lambda message:message.text in ["1","2","3","4","5","6"], content_types=['text'])
+@bot.message_handler(func=lambda message: message.text in ["1", "2", "3", "4", "5", "6"], content_types=['text'])
 def create_prediction(message: Message):
     if is_predictions_going:
         bot.send_message(message.chat.id, f"Записал {message.from_user.username} ты поставил на " + message.text)
         utils.save_prediction(message)
     else:
-        bot.send_message(message.chat.id,"КУДЫ ПАЛЬЦЕМ ТЫЧЕШЬ? Я ЩАС ТЕБЕ ЕГО В ЖОПУ ЗАСУНУ")
+        bot.send_message(message.chat.id, "КУДЫ ПАЛЬЦЕМ ТЫЧЕШЬ? Я ЩАС ТЕБЕ ЕГО В ЖОПУ ЗАСУНУ")
 
 
 @bot.message_handler(commands=["time"])
