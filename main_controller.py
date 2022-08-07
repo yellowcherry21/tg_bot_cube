@@ -8,7 +8,7 @@ import os
 locale.setlocale(locale.LC_ALL)
 
 #with open("bot_token.txt", "r") as bot_token_file:
-    #bot_token = bot_token_file.read()
+#   bot_token = bot_token_file.read()
 
 bot_token = os.environ.get('BOT_TOKEN', None)
 
