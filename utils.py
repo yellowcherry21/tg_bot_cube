@@ -2,18 +2,19 @@ import os
 from sqlite3 import DatabaseError
 from telebot import types, TeleBot
 import time
+import db
 
 
-#with open("bot_token.txt", "r") as bot_token_file:
-#   bot_token = bot_token_file.read()
+with open("bot_token.txt", "r") as bot_token_file:
+   bot_token = bot_token_file.read()
 
-bot_token = os.environ.get('BOT_TOKEN', None)
+#bot_token = os.environ.get('BOT_TOKEN', None)
 
 bot = TeleBot(bot_token)
 
 
 def playing(message: types.Message):
-    prediction_locker(message.chat.id)
+    db.set_flag(message.chat.id, True)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("1")
     btn2 = types.KeyboardButton("2")
@@ -27,7 +28,7 @@ def playing(message: types.Message):
 
     time.sleep(30)
     
-    database_set_flag(message.chat.id, False)
+    db.set_flag(message.chat.id, False)
 
     result = throw_cube(message)
     bot.send_message(message.chat.id, f"ВЫПАЛО {result}")
@@ -51,8 +52,3 @@ def save_prediction(message: types.Message):
                                str(message.from_user.id) + "," +
                                str(message.date) + "," +
                                str(message.text)+"\n")
-
-def prediction_locker(id: int):
-    flag = get_flag(id)
-    if not flag:
-        database_set_flag(id, True)

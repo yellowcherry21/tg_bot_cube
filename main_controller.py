@@ -49,6 +49,7 @@ def create_prediction(message: Message):
 @bot.message_handler(commands=["time"])
 def create_prediction(message: Message):
     bot.send_message(message.chat.id, f"Сейчас {message.date}")
+    bot.send_message(message.chat.id, f"Сейчас {message.chat.id}")
 
 
 bot.infinity_polling()
