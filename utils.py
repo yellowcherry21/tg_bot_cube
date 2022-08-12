@@ -1,32 +1,24 @@
-import os
-from telebot import types, TeleBot
+from init import init_bot, GREETING, CHOOSE_NUMBER, CUBE_RESULT_ALERT, GAME_OVER
+from telebot import types
 import time
+import db
 
 
-#with open("bot_token.txt", "r") as bot_token_file:
-#   bot_token = bot_token_file.read()
-
-bot_token = os.environ.get('BOT_TOKEN', None)
-
-bot = TeleBot(bot_token)
+bot = init_bot()
 
 
 def playing(message: types.Message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("1")
-    btn2 = types.KeyboardButton("2")
-    btn3 = types.KeyboardButton("3")
-    btn4 = types.KeyboardButton("4")
-    btn5 = types.KeyboardButton("5")
-    btn6 = types.KeyboardButton("6")
-    markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
-    bot.send_message(
-        message.chat.id, text="ВЫБИРАЙ БЛЯ ЦИФРУ ЕБЛАН", reply_markup=markup)
+    chat_id = message.chat.id
+    if not is_playing(chat_id):
+        db.set_flag(chat_id, True)
+        init_game(chat_id)
 
-    time.sleep(30)
+        time.sleep(30)
 
-    result = throw_cube(message)
-    bot.send_message(message.chat.id, f"ВЫПАЛО {result}")
+        result = throw_cube(message)
+        bot.send_message(chat_id, f"{CUBE_RESULT_ALERT} {result}")
+    db.set_flag(chat_id, False)
+    bot.send_message(chat_id, GAME_OVER)
 
 
 def save_user(user: types.User):
@@ -47,3 +39,20 @@ def save_prediction(message: types.Message):
                                str(message.from_user.id) + "," +
                                str(message.date) + "," +
                                str(message.text)+"\n")
+
+
+def is_playing(id: int):
+    return db.get_flag_by_id(id)
+
+
+def init_game(chat_id):
+    bot.send_message(chat_id, GREETING)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("1")
+    btn2 = types.KeyboardButton("2")
+    btn3 = types.KeyboardButton("3")
+    btn4 = types.KeyboardButton("4")
+    btn5 = types.KeyboardButton("5")
+    btn6 = types.KeyboardButton("6")
+    markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
+    bot.send_message(chat_id, text=CHOOSE_NUMBER, reply_markup=markup)
