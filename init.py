@@ -1,5 +1,6 @@
 from telebot import TeleBot
 import psycopg2 as pg
+import os
 
 GAME_OVER = "GAME OVER"
 QUERIES = {"set_flag": '''UPDATE public."Availability" 
@@ -14,12 +15,11 @@ CHOOSE_NUMBER = "ВЫБИРАЙ БЛЯ ЦИФРУ ЕБЛАН"
 CUBE_RESULT_ALERT = "ВЫПАЛО"
 IS_PREDICTION_GOING = True
 
-#bot_token = os.environ.get('BOT_TOKEN', None)
-
 
 def init_bot():
-    with open("bot_token.txt", "r") as bot_token_file:
-        bot_token = bot_token_file.read()
+    # with open("bot_token.txt", "r") as bot_token_file:
+    #bot_token = bot_token_file.read()
+    bot_token = os.environ.get('BOT_TOKEN', None)
     return TeleBot(bot_token)
 
 
