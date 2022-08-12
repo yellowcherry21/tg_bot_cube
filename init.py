@@ -15,7 +15,6 @@ CUBE_RESULT_ALERT = "ВЫПАЛО"
 IS_PREDICTION_GOING = True
 
 #bot_token = os.environ.get('BOT_TOKEN', None)
-#bot_token = os.environ.get('BOT_TOKEN', None)
 
 
 def init_bot():
