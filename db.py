@@ -1,15 +1,16 @@
-import psycopg2 as pg
-
-QUERIES = {"set_flag": '''UPDATE public."Availability" 
-            SET flag = %s 
-            WHERE id = %s''',
-           }
+from init import get_db_connection, QUERIES
+from contextlib import closing
 
 
-con = pg.connect(dbname='learn_db', user='postgres',
-                        password='admin', host='localhost')
+def set_flag(chat_id: int, flag: bool) -> None:
+    con = get_db_connection()
+    with closing(con), con, con.cursor() as cursor:
+        cursor.execute(QUERIES['set_flag'], (flag, chat_id))
 
-def set_flag(chat_id, flag):
-    with con, con.cursor() as cursor:
-            cursor.execute(QUERIES['set_flag'], (flag, chat_id))
-    con.close()
+
+def get_flag_by_id(id: int) -> bool:
+    con = get_db_connection()
+    with closing(con), con, con.cursor() as cursor:
+        cursor.execute(QUERIES['get_flag_by_id'], (id,))
+        flag = cursor.fetchone()[0]
+    return flag
