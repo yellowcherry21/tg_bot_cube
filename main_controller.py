@@ -47,5 +47,8 @@ def create_prediction(message: Message):
     bot.send_message(message.chat.id, f"Сейчас {message.date}")
     bot.send_message(message.chat.id, f"Сейчас {message.chat.id}")
 
+@bot.message_handler(commands=["reg_chat"])
+def reg_chat(message: Message):
+    utils.reg_chat(message.chat.id)
 
 bot.infinity_polling()

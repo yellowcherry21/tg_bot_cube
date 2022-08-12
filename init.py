@@ -7,7 +7,9 @@ GAME_OVER = "GAME OVER"
 QUERIES = {"set_flag": '''UPDATE public."Availability" 
             SET flag = %s 
             WHERE id = %s''',
-           "get_flag_by_id": """SELECT flag FROM public."Availability" WHERE id = %s"""
+           "get_flag_by_id": """SELECT flag FROM public."Availability" WHERE id = %s""",
+           "reg_chat": """INSERT INTO public."Availability"
+                          VALUES (%s, false)"""
            }
 GREETING = '''АЛЁ ЕБЛАНЫ ИГРА НАЧАЛАСЬ
 ДЕЛАЕМ СТАВКИ

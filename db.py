@@ -14,3 +14,9 @@ def get_flag_by_id(id: int) -> bool:
         cursor.execute(QUERIES['get_flag_by_id'], (id,))
         flag = cursor.fetchone()[0]
     return flag
+
+
+def save_chat(id: int) -> None:
+    con = get_db_connection()
+    with closing(con), con, con.cursor() as cursor:
+        cursor.execute(QUERIES['reg_chat'], (id,))

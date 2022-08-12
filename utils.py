@@ -56,3 +56,7 @@ def init_game(chat_id):
     btn6 = types.KeyboardButton("6")
     markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
     bot.send_message(chat_id, text=CHOOSE_NUMBER, reply_markup=markup)
+
+
+def reg_chat(id:int)->None:
+    db.save_chat(id)
